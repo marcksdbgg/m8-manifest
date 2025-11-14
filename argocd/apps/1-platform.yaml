@@ -1,18 +1,21 @@
-# argocd/application-n8n-saas.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: n8n-saas-root
+  name: platform-dbs
   namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: 'https://github.com/marcksdbgg/m8-manifest'
-    path: . # Directorio raíz del repositorio
     targetRevision: HEAD
+    path: platform
+    directory:
+      recurse: true
   destination:
-    server: 'https://kubernetes.default.svc'
-    # El namespace es irrelevante aquí, ya que cada recurso tiene el suyo.
+    server: https://kubernetes.default.svc
+    namespace: platform-dbs
   syncPolicy:
     automated:
       prune: true
