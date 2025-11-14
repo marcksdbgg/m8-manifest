@@ -38,9 +38,10 @@ spec:
         - name: QUEUE_BULL_REDIS_HOST
           value: "redis-svc.platform-dbs.svc.cluster.local"
         - name: QUEUE_BULL_REDIS_DB
-          value: "1" # DB Lógica en Redis para este tenant
+          value: "1"
+        # REEMPLAZA
         - name: WEBHOOK_URL
-          value: "https://tenant-a.n8n.tu-dominio.com/" # <-- REEMPLAZA
+          value: "https://tenant-a.n8n.tu-dominio.com/" 
         resources:
           requests:
             cpu: 250m
