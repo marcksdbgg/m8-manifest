@@ -39,7 +39,7 @@ spec:
         - name: QUEUE_BULL_REDIS_DB
           value: "2" # DB Lógica diferente
         - name: WEBHOOK_URL
-          value: "https://tenant-b.n8n.tu-dominio.com/" # <-- REEMPLAZA
+          value: "https://tenant-b.n8n.atenex.pe/"
         resources:
           requests:
             cpu: 250m

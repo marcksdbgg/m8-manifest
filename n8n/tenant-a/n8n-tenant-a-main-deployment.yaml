@@ -41,7 +41,7 @@ spec:
           value: "1"
         # REEMPLAZA
         - name: WEBHOOK_URL
-          value: "https://tenant-a.n8n.tu-dominio.com/" 
+          value: "https://tenant-a.n8n.atenex.pe/"
         resources:
           requests:
             cpu: 250m

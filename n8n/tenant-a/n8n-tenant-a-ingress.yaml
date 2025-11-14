@@ -6,9 +6,11 @@ metadata:
   namespace: n8n-tenants
   annotations:
     kubernetes.io/ingress.class: "traefik" # Específico para el ingress controller de K3s
+    # traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    # traefik.ingress.kubernetes.io/router.tls.certresolver: myresolver
 spec:
   rules:
-  - host: "tenant-a.n8n.tu-dominio.com" # <-- REEMPLAZA
+  - host: "tenant-a.n8n.atenex.pe"
     http:
       paths:
       - path: /
