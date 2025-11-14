@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-ingress
+  namespace: argocd
+  annotations:
+    kubernetes.io/ingress.class: "traefik" 
+    # Añade estas líneas si quieres que Traefik gestione SSL (Recomendado)
+    # traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    # traefik.ingress.kubernetes.io/router.tls.certresolver: myresolver 
+    # (Asumiendo que tienes un CertResolver llamado 'myresolver' en Traefik)
+spec:
+  rules:
+  - host: "argocd.atenex.pe"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
