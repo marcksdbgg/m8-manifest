@@ -1,1 +1,21 @@
-# Placeholder for ArgoCD Application manifest for n8n SaaS
+# argocd/application-n8n-saas.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: n8n-saas-root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/tu-usuario/tu-repositorio.git' # <-- REEMPLAZA ESTO
+    path: . # Directorio raíz del repositorio
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    # El namespace es irrelevante aquí, ya que cada recurso tiene el suyo.
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true # Permite a ArgoCD crear los namespaces definidos en la carpeta /namespaces

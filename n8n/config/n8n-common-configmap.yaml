@@ -1,1 +1,15 @@
-# Placeholder for n8n common ConfigMap manifest
+# n8n/config/n8n-common-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-common-config
+  namespace: n8n-tenants
+data:
+  # Configuración crucial para que n8n escuche en todas las interfaces dentro del pod
+  N8N_LISTEN_ADDRESS: "0.0.0.0"
+  # Zona horaria para ejecuciones programadas
+  TZ: "America/Lima"
+  # Tipo de base de datos a usar
+  DB_TYPE: "postgresdb"
+  # Modo de ejecución para usar workers
+  EXECUTIONS_MODE: "queue"

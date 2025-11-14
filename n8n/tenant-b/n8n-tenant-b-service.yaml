@@ -1,1 +1,16 @@
-# Placeholder for tenant B Service manifest
+# n8n/tenant-b/n8n-tenant-b-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: n8n-tenant-b-svc
+  namespace: n8n-tenants
+spec:
+  selector:
+    app: n8n
+    tenant: tenant-b
+    role: main
+  ports:
+    - protocol: TCP
+      name: http
+      port: 5678
+      targetPort: 5678

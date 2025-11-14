@@ -1,1 +1,20 @@
-# Placeholder for tenant A Ingress manifest
+# n8n/tenant-a/n8n-tenant-a-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: n8n-tenant-a-ingress
+  namespace: n8n-tenants
+  annotations:
+    kubernetes.io/ingress.class: "traefik" # Específico para el ingress controller de K3s
+spec:
+  rules:
+  - host: "tenant-a.n8n.tu-dominio.com" # <-- REEMPLAZA
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: n8n-tenant-a-svc
+            port:
+              number: 5678

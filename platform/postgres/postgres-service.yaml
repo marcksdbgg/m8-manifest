@@ -1,1 +1,13 @@
-# Placeholder for shared PostgreSQL Service manifest
+# platform/postgres/postgres-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-svc
+  namespace: platform-dbs
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

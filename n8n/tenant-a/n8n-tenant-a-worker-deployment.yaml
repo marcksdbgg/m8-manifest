@@ -1,1 +1,51 @@
-# Placeholder for tenant A worker Deployment manifest
+# n8n/tenant-a/n8n-tenant-a-worker-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n-tenant-a-worker
+  namespace: n8n-tenants
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n8n
+      tenant: tenant-a
+      role: worker
+  template:
+    metadata:
+      labels:
+        app: n8n
+        tenant: tenant-a
+        role: worker
+    spec:
+      initContainers: # Contenedor de inicialización para esperar a que el main pod esté listo
+      - name: wait-for-main
+        image: busybox:1.35
+        command: ['sh', '-c', 'until nc -vz n8n-tenant-a-svc 5678; do echo "Waiting for main n8n pod..."; sleep 2; done;']
+      containers:
+      - name: n8n-worker
+        image: n8nio/n8n:1.119.1
+        command: ["n8n", "worker"] # Comando para iniciar en modo worker
+        envFrom:
+        - configMapRef:
+            name: n8n-common-config
+        - secretRef:
+            name: n8n-tenant-a-secret
+        env:
+        - name: DB_POSTGRESDB_HOST
+          value: "postgres-svc.platform-dbs.svc.cluster.local"
+        - name: DB_POSTGRESDB_DATABASE
+          value: "n8n_tenant_a"
+        - name: DB_POSTGRESDB_USER
+          value: "user_tenant_a"
+        - name: QUEUE_BULL_REDIS_HOST
+          value: "redis-svc.platform-dbs.svc.cluster.local"
+        - name: QUEUE_BULL_REDIS_DB
+          value: "1"
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 1Gi
