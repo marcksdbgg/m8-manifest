@@ -4,3 +4,6 @@ secrets/
 # Export script and generated documentation
 export_codebase.py
 full_codebase.md
+
+# vscode settings  
+.vscode/
