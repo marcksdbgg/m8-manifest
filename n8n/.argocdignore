@@ -1,0 +1,4 @@
+# Ignore exported workflow artifacts and non-kubernetes files under `-workflow` directories
+**/*-workflow/**
+# Alternatively, ignore all json files in workflow folders (keeps other json intact)
+**/*-workflow/*.json
