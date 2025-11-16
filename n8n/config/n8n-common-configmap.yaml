@@ -11,5 +11,12 @@ data:
   TZ: "America/Lima"
   # Tipo de base de datos a usar
   DB_TYPE: "postgresdb"
+  # Desactivar SSL para conexiones internas con la base Postgres del cluster
+  # Si necesita usar SSL (recomendado para conexiones externas), configure
+  # certificados y habilite SSL en el pod de postgres, además de configurar
+  # las variables apropiadas en n8n (DB_POSTGRESDB_SSL=true y certificados CA).
+  DB_POSTGRESDB_SSL: "false"
+  # Puerto por defecto de Postgres en el cluster (opcional)
+  DB_POSTGRESDB_PORT: "5432"
   # Modo de ejecución para usar workers
   EXECUTIONS_MODE: "queue"

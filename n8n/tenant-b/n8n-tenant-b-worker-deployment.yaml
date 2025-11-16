@@ -37,6 +37,10 @@ spec:
           value: "n8n_tenant_b"
         - name: DB_POSTGRESDB_USER
           value: "user_tenant_b"
+        - name: DB_POSTGRESDB_PORT
+          value: "5432"
+        - name: DB_POSTGRESDB_SSL
+          value: "false"
         - name: QUEUE_BULL_REDIS_HOST
           value: "redis-svc.platform-dbs.svc.cluster.local"
         - name: QUEUE_BULL_REDIS_DB
