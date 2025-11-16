@@ -2,3 +2,6 @@
 **/*-workflow/**
 # Alternatively, ignore all json files in workflow folders (keeps other json intact)
 **/*-workflow/*.json
+# If necessary, ignore json files globally under this path to avoid non-k8s artifacts being parsed
+# Use this with caution: if you have k8s manifests in JSON format, remove or narrow this pattern.
+**/*.json
