@@ -13,6 +13,15 @@ spec:
   - host: "tenant-a.n8n.atenex.pe"
     http:
       paths:
+      # 1. Regla específica para el Webhook Receiver (Debe ir antes o ser más específica)
+      - path: /webhook-receiver
+        pathType: Prefix
+        backend:
+          service:
+            name: n8n-tenant-a-webhook-svc
+            port:
+              number: 8080
+      # 2. Regla general para n8n
       - path: /
         pathType: Prefix
         backend:
