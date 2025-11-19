@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: n8n-tenant-a-webhook-ingress
+  namespace: n8n-tenants
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: "tenant-a.n8n.atenex.pe"
+    http:
+      paths:
+      - path: /webhook-receiver
+        pathType: Prefix
+        backend:
+          service:
+            name: n8n-tenant-a-webhook-svc
+            port:
+              number: 8080
+  tls:
+  - hosts:
+    - tenant-a.n8n.atenex.pe
+    secretName: tenant-a-tls-secret
