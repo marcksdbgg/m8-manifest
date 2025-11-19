@@ -3,17 +3,23 @@ kind: Deployment
 metadata:
   name: n8n-tenant-a-webhook-receiver
   namespace: n8n-tenants
+  labels:
+    app: n8n-webhook
+    tenant: tenant-a
+    role: webhook
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webhook-receiver
+      app: n8n-webhook
       tenant: tenant-a
+      role: webhook
   template:
     metadata:
       labels:
-        app: webhook-receiver
+        app: n8n-webhook
         tenant: tenant-a
+        role: webhook
     spec:
       containers:
         - name: echo-server
