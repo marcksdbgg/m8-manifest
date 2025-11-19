@@ -1,47 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: n8n-tenant-a-webhook
+  name: n8n-tenant-a-webhook-receiver
   namespace: n8n-tenants
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: n8n-webhook
+      app: webhook-receiver
       tenant: tenant-a
-      role: webhook
   template:
     metadata:
       labels:
-        app: n8n-webhook
+        app: webhook-receiver
         tenant: tenant-a
-        role: webhook
     spec:
       containers:
-      - name: webhook-receiver
-        image: python:3.12-slim
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 8080
-        command: ["python", "-u", "-c"]
-        args:
-        - "from http.server import BaseHTTPRequestHandler, HTTPServer; import sys, json; class H(BaseHTTPRequestHandler):\n    def _send_ok(self):\n        self.send_response(200)\n        self.send_header('Content-type', 'text/plain')\n        self.end_headers()\n    def do_GET(self):\n        self._send_ok(); self.wfile.write(b'OK')\n    def do_POST(self):\n        length = int(self.headers.get('Content-Length', 0))\n        data = self.rfile.read(length) if length else b''\n        print('WEBHOOK_RECEIVED: PATH=%s HEADERS=%s BODY=%s' % (self.path, dict(self.headers), data.decode('utf-8', errors='ignore')))\n        sys.stdout.flush()\n        self._send_ok(); self.wfile.write(b'OK')\n    def log_message(self, format, *args):\n        return\nserver = HTTPServer(('0.0.0.0', 8080), H); print('Starting webhook receiver on 0.0.0.0:8080'); server.serve_forever()"
-        resources:
-          requests:
-            cpu: 50m
-            memory: 64Mi
-          limits:
-            cpu: 250m
-            memory: 256Mi
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 2
-          periodSeconds: 5
+        - name: echo-server
+          image: mendhak/http-https-echo:30
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HTTP_PORT
+              value: "8080"
+            - name: LOG_WITHOUT_NEWLINE
+              value: "true"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi

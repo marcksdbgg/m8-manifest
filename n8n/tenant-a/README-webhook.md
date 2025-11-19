@@ -18,3 +18,5 @@ curl -X POST http://n8n-tenant-a-webhook-svc.n8n-tenants.svc.cluster.local:8080/
 
 Este receptor imprime las solicitudes de webhook en los logs del pod. Configura tu flujo de trabajo de n8n (HTTP Request o Polling) para conectarte al servicio interno para leer o procesar payloads.
 
+
+

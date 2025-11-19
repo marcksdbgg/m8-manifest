@@ -2,15 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: n8n-tenant-a-svc
+  name: n8n-tenant-a-webhook-svc 
   namespace: n8n-tenants
 spec:
   selector:
-    app: n8n
+    app: webhook-receiver
     tenant: tenant-a
-    role: main
   ports:
     - protocol: TCP
-      name: http
-      port: 5678
-      targetPort: 5678
+      port: 8080
+      targetPort: 8080
