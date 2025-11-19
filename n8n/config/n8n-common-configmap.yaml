@@ -20,3 +20,14 @@ data:
   DB_POSTGRESDB_PORT: "5432"
   # Modo de ejecución para usar workers
   EXECUTIONS_MODE: "queue"
+  # Confiar en Traefik y las redes internas para X-Forwarded-For
+  N8N_SECURITY_TRUSTED_PROXIES: "loopback,linklocal,uniquelocal,10.42.0.0/16,10.43.0.0/16"
+  # Aplicar permisos estrictos al archivo de settings
+  N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+  # Adoptar task runners y offload de ejecuciones manuales
+  N8N_RUNNERS_ENABLED: "true"
+  OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS: "true"
+  # Mantener acceso a variables de entorno en nodos de código (valor actual)
+  N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+  # Deshabilitar repositorios bare en el nodo Git
+  N8N_GIT_NODE_DISABLE_BARE_REPOS: "true"
