@@ -48,7 +48,7 @@ spec:
             memory: 600Mi
           limits:
             cpu: 1000m
-            memory: 1.2Gi
+            memory: 1200Mi
         livenessProbe:
           tcpSocket:
             port: 3000
