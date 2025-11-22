@@ -34,7 +34,6 @@ spec:
       - name: chatwoot-web
         image: chatwoot/chatwoot:v3.14.0
         imagePullPolicy: IfNotPresent
-        # Restauramos el comando para iniciar el servidor web
         command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
         ports:
         - containerPort: 3000
@@ -50,17 +49,12 @@ spec:
           limits:
             cpu: 1000m
             memory: 1.2Gi
-        # 2. CORRECCIÓN DE SONDAS:
-        # Liveness: Usamos TCP Socket. Si el puerto abre, está vivo.
-        # Es mucho más estable que buscar rutas HTTP específicas que pueden cambiar.
         livenessProbe:
           tcpSocket:
             port: 3000
           initialDelaySeconds: 60
           periodSeconds: 20
           failureThreshold: 5
-        # Readiness: Buscamos la raiz "/".
-        # Si devuelve la página de login (status 200), está listo para recibir tráfico.
         readinessProbe:
           httpGet:
             path: /
