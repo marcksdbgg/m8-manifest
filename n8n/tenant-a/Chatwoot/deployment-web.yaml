@@ -35,6 +35,7 @@ spec:
       - name: chatwoot-web
         image: chatwoot/chatwoot:v3.14.0
         imagePullPolicy: IfNotPresent
+        command: ["bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
         ports:
         - containerPort: 3000
         envFrom:
