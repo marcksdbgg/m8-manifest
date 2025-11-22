@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatwoot-tenant-a-worker
+  namespace: n8n-tenants
+  labels:
+    app: chatwoot
+    tenant: tenant-a
+    role: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatwoot
+      tenant: tenant-a
+      role: worker
+  template:
+    metadata:
+      labels:
+        app: chatwoot
+        tenant: tenant-a
+        role: worker
+    spec:
+      containers:
+      - name: chatwoot-worker
+        image: chatwoot/chatwoot:v3.14.0
+        imagePullPolicy: IfNotPresent
+        command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
+        envFrom:
+        - configMapRef:
+            name: chatwoot-tenant-a-config
+        - secretRef:
+            name: chatwoot-tenant-a-secret
+        # El worker suele consumir menos RAM que la web si no hay mucha carga
+        resources:
+          requests:
+            cpu: 150m
+            memory: 400Mi
+          limits:
+            cpu: 800m
+            memory: 1Gi

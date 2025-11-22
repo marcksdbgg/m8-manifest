@@ -4,8 +4,8 @@ metadata:
   name: argocd-server-ingress
   namespace: argocd
   annotations:
-    # Esta anotación sigue siendo útil, pero la de abajo es la principal
-    kubernetes.io/ingress.class: "traefik" 
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   # ESTA LÍNEA ES LA CORRECCIÓN MÁS IMPORTANTE
   ingressClassName: traefik 

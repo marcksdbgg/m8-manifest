@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatwoot-tenant-a-svc
+  namespace: n8n-tenants
+spec:
+  selector:
+    app: chatwoot
+    tenant: tenant-a
+    role: web
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: ClusterIP

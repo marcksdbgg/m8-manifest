@@ -1,0 +1,25 @@
+# tenant-a/Chatwoot/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chatwoot-tenant-a-config
+  namespace: n8n-tenants
+data:
+  # URL Pública (Usaremos un subdominio para evitar errores de assets)
+  FRONTEND_URL: "https://chat-tenant-a.n8n.atenex.pe"
+  # Entorno
+  RAILS_ENV: "production"
+  NODE_ENV: "production"
+  INSTALLATION_NAME: "Chatwoot Tenant A"
+  # Base de Datos (La existente en platform-dbs)
+  POSTGRES_HOST: "postgres-svc.platform-dbs.svc.cluster.local"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DATABASE: "chatwoot_tenant_a"
+  POSTGRES_USERNAME: "user_chatwoot_a"
+  # Redis (El existente, usando DB 3 para aislar datos)
+  REDIS_URL: "redis://:redis123@redis-svc.platform-dbs.svc.cluster.local:6379/3"
+  # Configuración de correo (Opcional para empezar, necesario para producción real)
+  # MAILER_SENDER_EMAIL: "noreply@atenex.pe"
+  # SMTP_DOMAIN: "atenex.pe"
+  # Habilita la creación de cuentas
+  ENABLE_ACCOUNT_SIGNUP: "false"

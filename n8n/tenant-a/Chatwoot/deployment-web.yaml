@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatwoot-tenant-a-web
+  namespace: n8n-tenants
+  labels:
+    app: chatwoot
+    tenant: tenant-a
+    role: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatwoot
+      tenant: tenant-a
+      role: web
+  template:
+    metadata:
+      labels:
+        app: chatwoot
+        tenant: tenant-a
+        role: web
+    spec:
+      # Init Container para preparar la DB automáticamente
+      initContainers:
+      - name: db-migrate
+        image: chatwoot/chatwoot:v3.14.0
+        command: ['bundle', 'exec', 'rails', 'db:chatwoot_prepare']
+        envFrom:
+        - configMapRef:
+            name: chatwoot-tenant-a-config
+        - secretRef:
+            name: chatwoot-tenant-a-secret
+      containers:
+      - name: chatwoot-web
+        image: chatwoot/chatwoot:v3.14.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: chatwoot-tenant-a-config
+        - secretRef:
+            name: chatwoot-tenant-a-secret
+        # Recursos optimizados para tu VM
+        resources:
+          requests:
+            cpu: 300m
+            memory: 600Mi
+          limits:
+            cpu: 1000m
+            memory: 1.2Gi
+        livenessProbe:
+          httpGet:
+            path: /health_check
+            port: 3000
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10

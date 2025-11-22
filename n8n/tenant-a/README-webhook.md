@@ -8,7 +8,7 @@ Uso:
 
 Ejemplo curl para probar externamente (si DNS resuelve / TLS configurado):
 ```
-curl -k -X POST https://tenant-a.n8n.atenex.pe/webhook-receiver -d '{"message":"hello"}' -H "Content-Type: application/json"
+curl -k -X POST https://tenant-a.n8n.atenex.pe/webhook-test/webhook-receiver -d '{"message":"hello"}' -H "Content-Type: application/json"
 ```
 
 Ejemplo curl desde dentro del clúster (desde un pod, ej. contenedor `n8n`):
